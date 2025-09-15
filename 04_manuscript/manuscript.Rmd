@@ -1,0 +1,17 @@
+---
+title: "manuscript"
+bibliography: references.bib
+author: "Cindy Gao"
+date: "2025-09-11"
+output: pdf_document
+---
+
+# Introduction
+
+Freshwater ecosystems are under immense pressure worldwide [@reid2019]. Anthropogenic land use and climate change are causing shifting water availability, widespread freshwater ecosystem degradation, and unprecedented freshwater biodiversity loss, threatening the ecosystem services and drinking water humans are dependent on for survival [@dudgeon2006] [@sterner2020] [@capon2021]. Simultaneously, current freshwater management and monitoring efforts are insufficient to meet global needs, placing a projected 4.8 billion lives at risk by 2030 [@unitednationsenvironmentprogramme2024].
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# References
