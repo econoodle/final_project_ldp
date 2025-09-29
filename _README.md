@@ -16,4 +16,4 @@ The files are named as follows:
 CG_LDP_description_version,
 where CG is an acronym for my name (Cindy Gao), LDP is an acronym for the Living Data Project, and description is a sensible description of the file. For raw data files, version will be a number starting from 1 indicating the iteration of the data, with 1 being the earliest version of the data and the largest number being the latest.
 
-For example, my data could be named: CG_LDP_PenguinTraits1
+For example, my data could be named: CG_LDP_PenguinTraits_1, indicating the earliest version of my penguin trait data.
