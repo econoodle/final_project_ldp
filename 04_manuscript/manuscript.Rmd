@@ -1,5 +1,5 @@
 ---
-title: "Environmental Disequilibrium in Freshwater Bioindicator Communities"
+title: "Penguin trait variation in the Palmer Archipelago"
 author: "Cindy Gao"
 date: "2025-09-29"
 bibliography: references.bib
@@ -9,65 +9,79 @@ output:
     fig_caption: yes
     extra_dependencies: ["float"]
 ---
+
 <!-- setting up global options - making it so that figures don't float -->
+
 ```{r global_options, include = FALSE, echo = FALSE, warning =FALSE}
 knitr::opts_chunk$set(fig.pos = "H", out.extra = "")
 ```
 
 <!-- loading packages and reading in data -->
+
 ```{r setup, include = FALSE, echo = FALSE}
 library(tidyverse)
 library(ggplot2)
 library(renv)
 library(readr)
 
-disequilibrium_data <- read_csv("../00_rawdata/ldp_disequilibrium_data.csv")
+penguin_data <- read_csv("../02_outdata/penguins_final.csv")
 ```
 
 # Introduction
 
-Freshwater ecosystems are under immense pressure worldwide [@reid2019]. Anthropogenic land use and climate change are causing shifting water availability, widespread freshwater ecosystem degradation, and unprecedented freshwater biodiversity loss, threatening the ecosystem services and drinking water humans are dependent on for survival [@dudgeon2006] [@sterner2020] [@capon2021]. Simultaneously, current freshwater management and monitoring efforts are insufficient to meet global needs, placing a projected 4.8 billion lives at risk by 2030 [@unitednationsenvironmentprogramme2024]. Substantial improvements to both water quality and monitoring will be required in the coming years.
-
-A key component of freshwater monitoring is the use of macroinvertebrate bioindicators, whose abundances are used as proxies for freshwater ecosystem health. For example, declines in the abundances of Ephemeroptera, Plecoptera, and Trichoptera (EPT) are widely considered indicators of poor water quality. The use of bioindicator species assumes that ecological communities are in equilibrium with their environment, meaning that species' abundances correspond 1:1 with environmental changes. However, extensive evidence has demonstrated that ecological communities frequently lag environmental changes, resulting in communities composed of species that are mismatched to their environment (hereafter environmental disequilibrium).
-
-This work aims to investigate EPT communities across the Northern Hemisphere for environmental disequilibrium. In doing so, we will uncover insights into the reliability of bioindicator-based environmental assessments, a core component of freshwater monitoring.
+Species' trait variation can give crucial insights into both the responses of species' to environmental gradients and the strength of filtering by those same gradients[@fitzgerald2025]. For example, strong environmental filtering may cause a specific set of trait values to be best suited to a system, decreasing overall trait variation with knock-on effects for overall community diversity [@craven2018]. Constrained trait values may also indicate low plasticity, developmental limits, or certain trait tradeoffs, which may also have negative implications for overall biodiversity [@arnold1992]. Consequently, identifying areas where species' trait variation is low or high may be of relevance to determining where species may be most threatened.
 
 # Methods
 
-To estimate total environmental disequilibrium, we used a community response diagram framework, where the environmental preferences of species are estimated. Then, for each site, we infer the environment based off of the species present. The inferred site is then compared against the known observed environment. Significant deviations from the known environment relative to null communities sampled from a regional pool of species are then considered environmental disequilibria. These disequilibrium states are unitless.
+The study used the Palmer Penguins dataset , which has physical measurements for adult penguins observed on Biscoe, Dream, and Torgersen Island [@horst2020]. The study sought to answer two questions related to spatial variation in penguin traits: 1) Do mean penguin trait values vary across Biscoe, Dream, and Torgersen Island, and 2) Do relationships between trait differ across Biscoe, Dream, and Torgersen Island?
+
+The traits used in the study included flipper length (mm), bill length (mm), and body mass (g). Question 1 was answered using ANOVAs that tested for differences in mean trait values across islands. Pairwise comparisons were performed using a post-hoc Tukey test.
+
+Question 2 was answered using a linear regression model that included an interaction term of the island. Pairwise comparisons were performed using a post-hoc Tukey test.
 
 # Figures
-<!-- visualizing the time series of environmental disequilibrium measurements for each year of sampling for each site. the points are then fitted with a loess spline, which provides a nonlinear estimation of the trend in environmental disequilibrium for each site. -->
-```{r, echo = FALSE, message = FALSE, warning = FALSE, fig.cap = "Time series of total environmental disequilibrium across sites."}
-ggplot(data = disequilibrium_data, aes(x = year, y = volMag_ses)) +
-  geom_point() +
-  stat_smooth(method = "loess") +
-  labs(x = "Year", y = "Total Environmental Disequilibrium", title = "Total Environmental Disequilibrium Across Time") +
-  theme_classic() +
-  facet_wrap(~site_id) +
-  scale_x_continuous(breaks = pretty(disequilibrium_data$year, n = 5)) +
-  theme(axis.text.x = element_text(angle = 80, hjust = 1)) 
-```
 
-<!-- visualizing the distribution of environmental disequilibrium values for each site through boxplots. these boxplots ignore time and represent a basic glimpse into the environmental disequilibrium values. -->
-```{r, echo = FALSE, message = FALSE, warning = FALSE, fig.cap = "Comparison of total disequilibrium between sites."}
-ggplot(data = disequilibrium_data, aes(x = site_id, y = mismatchMag_ses)) +
+<!-- Creating boxplots of flipper length for each island. -->
+
+```{r, echo = FALSE, message = FALSE, warning = FALSE, fig.cap= "Boxplots of flipper length (mm) across islands. Biscoe Island had the widest distribution and was significantly different from Dream and Torgersen Islands."}
+ggplot(penguin_data, aes(x = island, y = flipper_length_mm)) +
   geom_boxplot() +
-  labs(x = 'Site', y = 'Total Environmental Disequilibrium', title = 'Distribution of Total Environmental Disequilibrium Across Sites') +
+  labs(x = 'Island', y = 'Flipper Length (mm)', title = 'Distribution of flipper length (mm) across islands') +
+  theme_classic()
+```
+<!-- Using ggplot2 to calculate linear regressions for bill length and flipper length for each island. -->
+```{r, echo = FALSE, message = FALSE, warning = FALSE, fig.cap = "Comparison of the relationship between flipper and bill length across Biscoe, Dream, and Torgersen Island. Bill and flipper measurements were grouped by island and each group was fitted with a separate linear regression line. The relationship between traits on Biscoe Island is significantly different from Dream and Torgersen Island, whereas the relationship between traits is not significantly different between Dream and Torgersen Island."}
+ggplot(penguin_data, aes(x = bill_length_mm, y = flipper_length_mm, color = island)) +
+  geom_point(size = 3, alpha = 0.5) +
+  geom_smooth(method = "lm", se = F) +  
+  labs(
+    title = "Flipper length-Bill length relationship across Biscoe, Dream,\n and Torgersen Islands",
+    x = "Bill Length (mm)",
+    y = "Flipper Length (mm)",
+    color = "Island"
+  ) +
   theme_classic()
 ```
 
 # Tables
-<!-- I am first renaming the site_id column to 'Site' for clarity and then estimating the mean environmental disequilibrium value for each site. These values are saved in a new column named 'Mean Environmental Disequilibrium. I then visualize the mean environmental disequilibrium values as a table -->
-```{r, echo = FALSE, message = FALSE, warning = FALSE, fig.env = NULL}
-disequilibrium_summary <- disequilibrium_data |>
-  rename(`Site` = site_id) |>
-  group_by(`Site`) |>
-  summarise(`Mean Environmental Disequilibrium`= mean(mismatchMag_ses))
 
-knitr::kable(disequilibrium_summary,
-             caption = "Mean environmental disequilibrium level across
-             sites.")
+<!-- I am first using tidyr to group the penguin data by island. I then calculate the mean
+bill length, flipper length, and body mass for each island. These calculated values are then
+assembled as a table. -->
+
+```{r, echo = FALSE, message = FALSE, warning = FALSE, fig.cap = "A table summarizing mean trait values across the islands. Biscoe Island has the largest average trait values, followed by Dream Island, and then Torgersen Island."}
+penguin_summary <- penguin_data |>
+  group_by(island) |>
+  summarise(
+    count = n(),
+    `Mean Bill Length (mm)` = mean(bill_length_mm, na.rm = T),
+    `Mean Flipper Length (mm)` = mean(flipper_length_mm, na.rm = T),
+    `Mean Body Mass (g)` = mean(body_mass_g, na.rm = T)
+  )
+
+
+knitr::kable(penguin_summary,
+             caption = "Mean trait measurements across sites.")
 ```
 
 # References
