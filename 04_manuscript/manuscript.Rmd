@@ -1,11 +1,19 @@
 ---
-title: "manuscript"
-bibliography: references.bib
+title: "Environmental Disequilibrium in Freshwater Bioindicator Communities"
 author: "Cindy Gao"
-date: "2025-09-11"
-output: pdf_document
+date: "2025-09-29"
+bibliography: references.bib
 csl: "https://raw.githubusercontent.com/citation-style-language/styles/master/ecology-letters.csl"
+output:
+  pdf_document:
+    fig_caption: yes
+    extra_dependencies: ["float"]
 ---
+<!-- setting up global options - making it so that figures don't float -->
+```{r global_options, include = FALSE, echo = FALSE, warning =FALSE}
+knitr::opts_chunk$set(fig.pos = "H", out.extra = "")
+```
+
 <!-- loading packages and reading in data -->
 ```{r setup, include = FALSE, echo = FALSE}
 library(tidyverse)
@@ -13,17 +21,53 @@ library(ggplot2)
 library(renv)
 library(readr)
 
-df <- read_csv("00_rawdata/ldp_data_final.csv")
+disequilibrium_data <- read_csv("../00_rawdata/ldp_disequilibrium_data.csv")
 ```
 
 # Introduction
 
-Freshwater ecosystems are under immense pressure worldwide [@reid2019]. Anthropogenic land use and climate change are causing shifting water availability, widespread freshwater ecosystem degradation, and unprecedented freshwater biodiversity loss, threatening the ecosystem services and drinking water humans are dependent on for survival [@dudgeon2006] [@sterner2020] [@capon2021]. Simultaneously, current freshwater management and monitoring efforts are insufficient to meet global needs, placing a projected 4.8 billion lives at risk by 2030 [@unitednationsenvironmentprogramme2024].
+Freshwater ecosystems are under immense pressure worldwide [@reid2019]. Anthropogenic land use and climate change are causing shifting water availability, widespread freshwater ecosystem degradation, and unprecedented freshwater biodiversity loss, threatening the ecosystem services and drinking water humans are dependent on for survival [@dudgeon2006] [@sterner2020] [@capon2021]. Simultaneously, current freshwater management and monitoring efforts are insufficient to meet global needs, placing a projected 4.8 billion lives at risk by 2030 [@unitednationsenvironmentprogramme2024]. Substantial improvements to both water quality and monitoring will be required in the coming years.
+
+A key component of freshwater monitoring is the use of macroinvertebrate bioindicators, whose abundances are used as proxies for freshwater ecosystem health. For example, declines in the abundances of Ephemeroptera, Plecoptera, and Trichoptera (EPT) are widely considered indicators of poor water quality. The use of bioindicator species assumes that ecological communities are in equilibrium with their environment, meaning that species' abundances correspond 1:1 with environmental changes. However, extensive evidence has demonstrated that ecological communities frequently lag environmental changes, resulting in communities composed of species that are mismatched to their environment (hereafter environmental disequilibrium).
+
+This work aims to investigate EPT communities across the Northern Hemisphere for environmental disequilibrium. In doing so, we will uncover insights into the reliability of bioindicator-based environmental assessments, a core component of freshwater monitoring.
+
+# Methods
+
+To estimate total environmental disequilibrium, we used a community response diagram framework, where the environmental preferences of species are estimated. Then, for each site, we infer the environment based off of the species present. The inferred site is then compared against the known observed environment. Significant deviations from the known environment relative to null communities sampled from a regional pool of species are then considered environmental disequilibria. These disequilibrium states are unitless.
 
 # Figures
-```{r figures, include = FALSE}
-
+<!-- visualizing the time series of environmental disequilibrium measurements for each year of sampling for each site. the points are then fitted with a loess spline, which provides a nonlinear estimation of the trend in environmental disequilibrium for each site. -->
+```{r, echo = FALSE, message = FALSE, warning = FALSE, fig.cap = "Time series of total environmental disequilibrium across sites."}
+ggplot(data = disequilibrium_data, aes(x = year, y = volMag_ses)) +
+  geom_point() +
+  stat_smooth(method = "loess") +
+  labs(x = "Year", y = "Total Environmental Disequilibrium", title = "Total Environmental Disequilibrium Across Time") +
+  theme_classic() +
+  facet_wrap(~site_id) +
+  scale_x_continuous(breaks = pretty(disequilibrium_data$year, n = 5)) +
+  theme(axis.text.x = element_text(angle = 80, hjust = 1)) 
 ```
 
+<!-- visualizing the distribution of environmental disequilibrium values for each site through boxplots. these boxplots ignore time and represent a basic glimpse into the environmental disequilibrium values. -->
+```{r, echo = FALSE, message = FALSE, warning = FALSE, fig.cap = "Comparison of total disequilibrium between sites."}
+ggplot(data = disequilibrium_data, aes(x = site_id, y = mismatchMag_ses)) +
+  geom_boxplot() +
+  labs(x = 'Site', y = 'Total Environmental Disequilibrium', title = 'Distribution of Total Environmental Disequilibrium Across Sites') +
+  theme_classic()
+```
+
+# Tables
+<!-- I am first renaming the site_id column to 'Site' for clarity and then estimating the mean environmental disequilibrium value for each site. These values are saved in a new column named 'Mean Environmental Disequilibrium. I then visualize the mean environmental disequilibrium values as a table -->
+```{r, echo = FALSE, message = FALSE, warning = FALSE, fig.env = NULL}
+disequilibrium_summary <- disequilibrium_data |>
+  rename(`Site` = site_id) |>
+  group_by(`Site`) |>
+  summarise(`Mean Environmental Disequilibrium`= mean(mismatchMag_ses))
+
+knitr::kable(disequilibrium_summary,
+             caption = "Mean environmental disequilibrium level across
+             sites.")
+```
 
 # References
