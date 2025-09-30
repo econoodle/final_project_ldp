@@ -9,6 +9,7 @@
 # setup; loading packages and reading in data -----------------------------
 library(tidyverse)
 library(emmeans)
+library(ggplot2)
 
 penguins <- read.csv('00_rawdata/CG_LDP_penguins_1.csv')
 
