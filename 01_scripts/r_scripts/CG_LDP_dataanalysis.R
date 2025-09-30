@@ -117,6 +117,3 @@ slopes_flipper_body <- emtrends(flipper_body_model, ~ island, var = 'body_mass_g
 pairs(slopes_flipper_body)
 # biscoe and dream, as well as biscoe and torgersen have significant differences in slope
 # for the flipper length x body mass model
-
-
-
