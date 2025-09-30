@@ -7,11 +7,10 @@
 
 
 # setup; loading packages and reading in data -----------------------------
-library(palmerpenguins)
 library(tidyverse)
 library(emmeans)
 
-penguins <- read.csv('00_rawdata/penguins.csv')
+penguins <- read.csv('00_rawdata/CG_LDP_penguins_1.csv')
 
 
 # exploratory data analysis -----------------------------------------------
@@ -53,7 +52,6 @@ penguins |>
 penguins_final <- penguins |>
   drop_na() |>
   select(-bill_depth_mm)
-
 
 # assessing for differences in mean trait value across islands ------------
 

@@ -24,7 +24,7 @@ library(ggplot2)
 library(renv)
 library(readr)
 
-penguin_data <- read_csv("../02_outdata/penguins_final.csv")
+penguin_data <- read_csv("../02_outdata/CG_LDP_cleanedpenguins_1.csv")
 ```
 
 # Introduction

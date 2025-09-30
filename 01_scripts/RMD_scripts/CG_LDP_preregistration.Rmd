@@ -1,12 +1,10 @@
 ---
-title           : "Understanding environmental disequilibrium in freshwater bioindicator communities across the Northern Hemisphere"
-shorttitle      : "Environmental disequilibrium in bioindicator communities"
+title           : "Penguin trait variation in the Palmer Archipelago"
+shorttitle      : "Penguin trait variation in the Palmer Archipelago"
 date            : "`r Sys.setlocale('LC_TIME', 'C'); format(Sys.time(), '%d\\\\. %B %Y')`"
 
 author: 
   - name        : Cindy Gao
-    affiliation : 1
-  - name        : Lars Iversen
     affiliation : 1
 
 affiliation:
@@ -14,29 +12,30 @@ affiliation:
     institution : McGill University
 
 output: prereg::prereg_pdf
+bibliography: references.bib
 ---
 
 # Study Information
 
-## Understanding environmental disequilibrium in freshwater bioindicator communities across the Northern Hemisphere
+## Penguin trait variation in the Palmer Archipelago
 
 `r rmarkdown::metadata$title`
 
 ## Description
 
-Species' responses to environmental change are frequently lagged, especially under accelerating global change. Such lags have not been investigated in bioindicator species, which are species that are used to infer the state of an ecosystem. If bioindicators are exhibiting such lags, then they may not respond as expected. My project aims to investigate if mayfly, caddisfly, and stonefly (i.e. EPT) species, commonly used freshwater bioindicators, are lagging behind water chemistry and climate change using a community response diagram framework.
+This study seeks to understand penguin trait variation in the Palmer Archipelago, Antarctica. Specifically, this study seeks to determine if mean flipper length, bill length, and body mass is significantly different across Biscoe, Dream, and Torgersen Island, and if the relationships between traits varies across these islands. By completing these analyses, islands where environmental filtering may be strong and/or species may have low plasticity will be identified, which has practical relevance for determining areas where species may be more vulnerable.
 
 ## Hypotheses
 
-If EPT species are lagging behind their enivronment, then the environment inferred from the species present at a given site will be significantly different than the observed environment relative to null communities sampled from the regional pool.
+Part 1: If geographic location is an important determinant of trait variation for penguins on the Palmer Archipelago, then mean trait values will be significantly different from each other.
+
+Part 2: If geographic location is an important influence on trait variation for penguins on the Palmer Archipelago, then the slopes in trait-trait relationships will be significantly different from one another.
 
 # Design Plan
 
-We will create a dataset of EPT species abundances, climate, and water quality measurements for stream and river sites across Europe, Canada, and the United States. For every site and year, we will infer the enivornmental variable measurements based off the species composition and compare this inferred environment against the observed environment relative to null communities sampled from the regional pool.
-
 ## Study type
 
-**Other**. Data synthesis and analysis project. Existing data is collated and used in a large-scale statistical analyses.
+**Other**. Data synthesis and analysis project. Existing data is collated and used for statistical analyses.
 
 ## Blinding
 
@@ -51,8 +50,11 @@ This question has a variety of possible answers. The key is for a researcher to 
 
 Example: We have a between subjects design with 1 factor (sugar by mass) with 4 levels. -->
 ```
+I will use the Palmer Penguins dataset, which includes bill length, bill depth, flipper length, and body mass measurements for adult penguins observed on Biscoe, Dream, and Torgensen Islands [@horst2020]. For the purposes of my study, I will only use bill length (mm), flipper length (mm), and body mass (g).
 
+Part 1: I will use ANOVA to test for significant differences in the mean values of the aforementioned traits across the three islands. I will then examine pairwise comparisons for each ANOVA using a Tukey test.
 
+Part 2: I will use linear regression to estimate the relationship between bill length and flipper length, as well as the relationship between flipper length and body mass. Both of these regressions will include an interaction term with island to determine how island moderates the relationship between the two sets of traits. A post-hoc Tukey test will be used to examine pairwise comparisons.
 ## Randomization
 
 ```{=html}
@@ -65,6 +67,7 @@ None.
 # Sampling Plan
 
 <!-- In this section we’ll ask you to describe how you plan to collect samples, as well as the number of samples you plan to collect and your rationale for this decision. Please keep in mind that the data described in this section should be the actual data used for analysis, so if you are using a subset of a larger dataset, please describe the subset that will actually be used in your study. -->
+None - this project is using existing data, which was collected by Dr. Kristen Gorman with the Palmer Station Long Term Ecological Research Program. 
 
 ## Existing data
 
@@ -81,8 +84,7 @@ An appropriate instance of using existing data would be collecting a sample size
 
 Example: An appropriate instance of using existing data would be collecting a sample size much larger than is required for the study, using a small portion of it to conduct exploratory analysis, and then registering one particular analysis that showed promising results. After registration, conduct the specified analysis on that part of the dataset that had not been investigated by the researcher up to that point. -->
 ```
-
-We will be using existing long-term water quality monitoring data collected by national and provincial programs, open-access repositories, and published studies. Access to the data has been limited by the fact that this is the first time I will have ever worked on a project of this nature.
+I will use existing data collected by Dr. Kristen Gorman with the Palmer Station Long Term Ecological Research Program. I have been partially blinded to the data as I have not explored the relationships or summary statistics that I are relevant to this project.
 
 ## Data collection procedures
 
@@ -93,7 +95,7 @@ The answer to this question requires a specific set of instructions so that anot
 
 Example: Participants will be recruited through advertisements at local pastry shops. Participants will be paid $10 for agreeing to participate (raised to $30 if our sample size is not reached within 15 days of beginning recruitment). Participants must be at least 18 years old and be able to eat the ingredients of the pastries. -->
 ```
-Data will be synthesized from existing long-term water quality monitoring programs at the federal and provincial level, open-access repositories, and published studies.
+The data will be taken from an existing source, specifically the Palmer Penguins dataset. I have removed the bill depth (mm) measurements as I am not using these measurements for the study. Additionally, I have dropped entries with missing data.
 
 ## Sample size
 
@@ -102,7 +104,7 @@ Data will be synthesized from existing long-term water quality monitoring progra
 
 Example: Our target sample size is 280 participants. We will attempt to recruit up to 320, assuming that not all will complete the total task. -->
 ```
-Our data contains 24 major watersheds across Canada at the moment. We will eventually have approximately 1250 watersheds across the Northern Hemisphere.
+The data contains 333 penguin observations total. The Biscoe Island subset contains 163 observations, Dream Island subset contains 123 observations, and the Torgensen Island subset contains 47 observations. 
 
 ## Sample size rationale
 
@@ -111,7 +113,7 @@ Our data contains 24 major watersheds across Canada at the moment. We will event
 
 Example: We used the software program G*Power to conduct a power analysis. Our goal was to obtain .95 power to detect a medium effect size of .25 at the standard .05 alpha error probability. -->
 ```
-Our goal is to conduct a comprehensive assessment of EPT species for lagged responses. We therefore would like to have as many samples as possible to detect spatial and temporal patterns, which is why we are choosing to amalgamate a large dataset.
+The sample size is constrained to what is available as it is an existing dataset. I ensured that cleaning and processing would leave at least 30 observations for each group in order to ensure having sufficient observations to conduct statistical analyses.
 
 ## Stopping rule
 
@@ -122,13 +124,11 @@ You may specify a stopping rule based on p-values only in the specific case of s
 
 Example: We will post participant sign-up slots by week on the preceding Friday night, with 20 spots posted per week. We will post 20 new slots each week if, on that Friday night, we are below 320 participants. -->
 ```
-We will terminate data collection in October 2026. This is because our analysis pipelines have already been written, and we would like to amass as much data as possible. This stopping date is arbitrary.
+None. I am using an existing dataset.
 
 # Variables
 
 <!-- In this section you can describe all variables (both manipulated and measured variables) that will later be used in your confirmatory analysis plan. In your analysis plan, you will have the opportunity to describe how each variable will be used. If you have variables which you are measuring for exploratory analyses, you are not required to list them, though you are permitted to do so. -->
-
-Variables include EPT species abundance, dissolved oxygen, total phosphorus, conductivity, turbidity, total dissolved solids, alkalinity, mean annual temperature, and precipitation. Measured variables will be 'degree of mismatch'.
 
 ## Manipulated variables
 
@@ -137,7 +137,7 @@ Variables include EPT species abundance, dissolved oxygen, total phosphorus, con
 
 Example: We manipulated the percentage of sugar by mass added to brownies. The four levels of this categorical variable are: 15%, 20%, 25%, or 40% cane sugar by mass. -->
 ```
-None.
+There are no treatments/true manipulations as the data was purely observational. For the purposes of my project, the 'treatments' would be the categorization of penguin measurements by island. The islands in the data are Biscoe Island, Dream Island, and Torgensen Island.
 
 ## Measured variables
 
@@ -148,7 +148,9 @@ Observational studies and meta-analyses will include only measured variables. As
 
 Example: The single outcome variable will be the perceived tastiness of the single brownie each participant will eat. We will measure this by asking participants ‘How much did you enjoy eating the brownie’ (on a scale of 1-7, 1 being 'not at all', 7 being 'a great deal') and 'How good did the brownie taste' (on a scale of 1-7, 1 being 'very bad', 7 being 'very good'). -->
 ```
-The measured variable is degree of mismatch, or environmental disequilibrium, at each site. This is taken to be the numerical difference between observed and inferred environments.
+Part 1: The outcome variable will be the mean trait values and the associated p-values for each ANOVA and Tukey test conducted.
+
+Part 2: The outcome variable will be the estimated slopes and the associated p-values for the modification of the trait-trait relationships by the island interaction term, as well as the p-value associated with the Tukey test.
 
 ## Indices
 
@@ -168,7 +170,6 @@ None.
 
 A confirmatory analysis plan must state up front which variables are predictors (independent) and which are the outcomes (dependent), otherwise it is an exploratory analysis. You are allowed to describe any exploratory work here, but a clear confirmatory analysis is required. -->
 ```
-We aim to use the comclim R package to estimate degree of mismatch at each site in our dataset. 
 
 ## Statistical models
 
@@ -182,7 +183,11 @@ This is perhaps the most important and most complicated question within the prer
 
 Example:  We will use a one-way between subjects ANOVA to analyze our results. The manipulated, categorical independent variable is 'sugar' whereas the dependent variable is our taste index. -->
 ```
-We will use community climate diagrams to estimate site-specific enivronmental disequilibrium. The measurement of interest is numerical environmental disequilibrium values taken to be the absolute deviation between the inferred and observed environment.
+Part 1: I will use ANOVA to test for significant differences in the mean values of the aforementioned traits across the three islands. I will then examine pairwise comparisons for each ANOVA using a Tukey test. The Tukey test will be performed using the 'emmeans' package.
+
+Part 2: I will use linear regression to estimate the relationship between bill length and flipper length, as well as the relationship between flipper length and body mass. Both of these regressions will include an interaction term with island to determine how island moderates the relationship between the two sets of traits. A post-hoc Tukey test will be used to examine pairwise comparisons.
+## Randomization
+
 ## Transformations
 
 ```{=html}
@@ -190,7 +195,7 @@ We will use community climate diagrams to estimate site-specific enivronmental d
 
 Example: The "Effect of sugar on brownie tastiness" does not require any additional transformations. However, if it were using a regression analysis and each level of sweet had been categorically described (e.g. not sweet, somewhat sweet, sweet, and very sweet), 'sweet' could be dummy coded with 'not sweet' as the reference category. -->
 ```
-Data will be standardized, but otherwise will not be transformed.
+Data will not be transformed.
 
 ## Inference criteria
 
@@ -201,7 +206,8 @@ p-values, confidence intervals, and effect sizes are standard means for making a
 
 Example: We will use the standard p<.05 criteria for determining if the ANOVA and the post hoc test suggest that the results are significantly different from those expected if the null hypothesis were correct. The post-hoc Tukey-Kramer test adjusts for multiple comparisons. -->
 ```
-We will use the standard p<0.05 for determining if the deviation between the observed and inferred environments are significantly different relative to null communities sampled from the regional pool of species.
+We will use the standard p<0.05 for determining significance for all statistical analyses. Differences in trait-trait relationships will be confirmed visually and with a pairwise comparisons test.
+
 ## Data exclusion
 
 ```{=html}
@@ -209,7 +215,7 @@ We will use the standard p<0.05 for determining if the deviation between the obs
 
 Example: No checks will be performed to determine eligibility for inclusion besides verification that each subject answered each of the three tastiness indices. Outliers will be included in the analysis. -->
 ```
-Outliers in water chemistry as determined by experts at Environment and Climate Change Canada will be removed from the data.
+Entries with missing data will be removed.
 
 ## Missing data
 
@@ -218,7 +224,7 @@ Outliers in water chemistry as determined by experts at Environment and Climate 
 
 Example: If a subject does not complete any of the three indices of tastiness, that subject will not be included in the analysis. -->
 ```
-Missing data will be imputed using MICE.
+Entries with missing data will be removed.
 
 ## Exploratory analyses (optional)
 
@@ -227,14 +233,12 @@ Missing data will be imputed using MICE.
 
 Example: We expect that certain demographic traits may be related to taste preferences. Therefore, we will look for relationships between demographic variables (age, gender, income, and marital status) and the primary outcome measures of taste preferences. -->
 ```
-None.
+I will examine potential differences in traits across groups by looking at the boxplots of all trait values by island, as well as estimating mean trait values.
 
 # References
 
-## 
-Li, L., Zheng, B., & Liu, L. (2010). Biomonitoring and Bioindicators Used for River Ecosystems: Definitions, Approaches and Trends. Procedia Environmental Sciences, 2, 1510–1524.
 
-Blonder, B., Moulton, D. E., Blois, J., Enquist, B. J., Graae, B. J., Macias-Fauria, M., McGill, B., Nogué, S., Ordonez, A., Sandel, B., & Svenning, J.-C. (2017). Predictability in community dynamics. Ecology Letters, 20(3), 293–306.
+
 ```{=tex}
 \vspace{-2pc}
 \setlength{\parindent}{-0.5in}
