@@ -12,7 +12,6 @@ library(emmeans)
 
 penguins <- read.csv('00_rawdata/CG_LDP_penguins_1.csv')
 
-
 # exploratory data analysis -----------------------------------------------
 # taking a glimpse at the mean trait values for each island
 penguins |>
