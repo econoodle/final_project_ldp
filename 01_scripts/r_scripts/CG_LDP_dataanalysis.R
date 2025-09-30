@@ -53,6 +53,9 @@ penguins_final <- penguins |>
   drop_na() |>
   select(-bill_depth_mm)
 
+# writing cleaned dataset to outputs folder
+write.csv(penguins_final, '02_outdata/CG_LDP_cleanedpenguins_1.csv', row.names = F)
+
 # assessing for differences in mean trait value across islands ------------
 
 # my first question is: Is there a significant difference in mean trait value
@@ -117,3 +120,4 @@ slopes_flipper_body <- emtrends(flipper_body_model, ~ island, var = 'body_mass_g
 pairs(slopes_flipper_body)
 # biscoe and dream, as well as biscoe and torgersen have significant differences in slope
 # for the flipper length x body mass model
+
